@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Programa Sandeman</title>
+<meta name="theme-color" content="#F2C12E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #FFFFFF;
+    --surface: #F6F7F6;
+    --text: #1C211F;
+    --muted: #56605A;
+    --line: #DADDDB;
+
+    /* Cor do programa */
+    --wine: #F2C12E;
+    --wine-on: #2A2003;
+    --accent: #A67C00;
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #131716; --surface: #1C2120; --text: #E6E9E7; --muted: #A1A9A4; --line: #313836;
+      --accent: #F2C12E;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #131716; --surface: #1C2120; --text: #E6E9E7; --muted: #A1A9A4; --line: #313836;
+    --accent: #F2C12E;
+  }
+
+  *, *::before, *::after { box-sizing: inherit; }
+  html { height: 100%; scroll-padding-top: env(safe-area-inset-top, 0px); -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; min-height: 100%;
+    background: var(--bg); color: var(--text);
+    font-family: "Schibsted Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 1rem; line-height: 1.5;
+  }
+
+  /* ---------- Topo na cor do programa ---------- */
+  .hero { position: relative; color: var(--wine-on); isolation: isolate; }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: var(--wine); transform-origin: bottom;
+  }
+  .hero .meniscus {
+    position: absolute; left: 0; right: 0; bottom: -1px;
+    width: 100%; height: clamp(1.5rem, 5vw, 3rem);
+    display: block; color: var(--bg);
+  }
+  .hero-inner {
+    max-width: 52rem; margin: 0 auto;
+    padding: clamp(2rem, 6vw, 3.5rem) 1.25rem clamp(4.5rem, 11vw, 7rem);
+  }
+  .hero .kicker { margin: 0 0 .5rem; font-weight: 600; font-size: 1.0625rem; opacity: .9; }
+  .hero h1 {
+    margin: 0;
+    font-size: clamp(3.25rem, 13vw, 7.5rem);
+    font-weight: 900; letter-spacing: -0.045em; line-height: .92;
+    text-wrap: balance; overflow-wrap: anywhere;
+  }
+
+  /* ---------- Agenda ---------- */
+  main.agenda { max-width: 52rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  .agenda h2 { margin: 0 0 .35rem; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+  .agenda .sub { margin: 0 0 2rem; color: var(--muted); }
+
+  .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+  .timeline::before {
+    content: ""; position: absolute;
+    left: calc(6rem + .8rem - 1px); top: 1.1rem; bottom: 1.1rem;
+    width: 2px; background: var(--line);
+  }
+  .slot { display: grid; grid-template-columns: 6rem 1.6rem minmax(0, 1fr); align-items: start; padding: .85rem 0; }
+  .slot time {
+    font-variant-numeric: tabular-nums; font-weight: 800;
+    font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.2; text-align: right;
+  }
+  .slot .dot {
+    justify-self: center; margin-top: .55rem;
+    width: .8rem; height: .8rem; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--accent);
+    position: relative; z-index: 1;
+  }
+  .slot:first-child .dot, .slot:last-child .dot { background: var(--bg); }
+  .slot .what { min-width: 0; padding-left: .5rem; overflow-wrap: anywhere; }
+  .slot .title { display: block; font-size: 1.125rem; font-weight: 600; line-height: 1.3; margin-top: .2rem; }
+  .slot .meta { display: block; color: var(--muted); font-size: .875rem; margin-top: .15rem; }
+
+  @media (max-width: 520px) {
+    .slot { grid-template-columns: 4.6rem 1.4rem minmax(0, 1fr); }
+    .timeline::before { left: calc(4.6rem + .7rem - 1px); }
+    .slot time { font-size: 1.25rem; }
+  }
+
+  /* Único momento animado: o topo enche-se com a cor do programa ao abrir */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero::before { animation: pour .9s cubic-bezier(.65,0,.35,1) both; }
+    .hero-inner, .hero .meniscus { animation: fade .5s ease .5s both; }
+    .slot { animation: up .45s cubic-bezier(.16,1,.3,1) both; animation-delay: calc(.7s + var(--i) * 55ms); }
+    @keyframes pour { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="kicker">Programa da visita</p>
+    <h1 translate="no">Sandeman</h1>
+  </div>
+  <svg class="meniscus" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="currentColor" d="M0 60 L0 34 Q720 -18 1440 34 L1440 60 Z"/>
+  </svg>
+</header>
+
+<main class="agenda">
+  <h2>Agenda do dia</h2>
+  <p class="sub" id="sub"></p>
+  <ol class="timeline" id="timeline"></ol>
+</main>
+
+<script>
+  /* ================= EDITAR AQUI =================
+     Hora de início e nome de cada momento, por ordem.
+     A duração mostrada é calculada até ao momento seguinte. */
+  const PROGRAMA = [
+    { hora: "09:00", titulo: "Recepção" },
+    { hora: "09:15", titulo: "Apresentação Empresa" },
+    { hora: "10:00", titulo: "Visita Caves Sandeman" },
+    { hora: "11:00", titulo: "Prova Vinhos do Porto" },
+    { hora: "11:45", titulo: "Dinâmica de Grupo" },
+    { hora: "12:30", titulo: "Foto de Grupo e Encerramento" }
+  ];
+  /* =============================================== */
+
+  const toMin = h => { const [a, b] = h.split(":").map(Number); return a * 60 + b; };
+  const pad = n => String(n).padStart(2, "0");
+  const fmt = h => { const m = toMin(h); return `${pad(Math.floor(m / 60))}h${pad(m % 60)}`; };
+
+  const list = document.getElementById("timeline");
+  document.getElementById("sub").textContent =
+    `A partir das ${fmt(PROGRAMA[0].hora)}, ${PROGRAMA.length} momentos.`;
+
+  PROGRAMA.forEach((l, i) => {
+    const next = PROGRAMA[i + 1];
+    const dur = next ? toMin(next.hora) - toMin(l.hora) : null;
+    const li = document.createElement("li");
+    li.className = "slot";
+    li.style.setProperty("--i", i);
+    li.innerHTML = `<time datetime="${l.hora}">${fmt(l.hora)}</time><span class="dot" aria-hidden="true"></span><span class="what"><span class="title"></span>${dur ? `<span class="meta">${dur} min</span>` : ""}</span>`;
+    li.querySelector(".title").textContent = l.titulo;
+    list.append(li);
+  });
+</script>
+</body>
+</html>
