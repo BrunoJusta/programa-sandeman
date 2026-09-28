@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Programa Sandeman</title>
+<title>Programa Caves Ferreira</title>
 <meta name="theme-color" content="#F2C12E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -91,10 +91,27 @@
     background: var(--accent); border: 2px solid var(--accent);
     position: relative; z-index: 1;
   }
-  .slot:first-child .dot, .slot:last-child .dot { background: var(--bg); }
+  .slot .dot { background: var(--bg); }
+  .slot.hl .dot { background: var(--accent); }
   .slot .what { min-width: 0; padding-left: .5rem; overflow-wrap: anywhere; }
-  .slot .title { display: block; font-size: 1.125rem; font-weight: 600; line-height: 1.3; margin-top: .2rem; }
-  .slot .meta { display: block; color: var(--muted); font-size: .875rem; margin-top: .15rem; }
+  .slot .title { display: block; font-size: 1.125rem; font-weight: 700; line-height: 1.3; margin-top: .2rem; }
+  .slot > div:first-child { text-align: right; }
+  .slot time { display: block; }
+  .slot .until { display: block; text-align: right; color: var(--muted); font-size: .8125rem; font-weight: 500; font-variant-numeric: tabular-nums; margin-top: .1rem; }
+  .facts { display: flex; flex-wrap: wrap; gap: .25rem .9rem; margin-top: .3rem; color: var(--muted); font-size: .875rem; }
+  .facts span { display: inline-flex; align-items: center; gap: .35rem; }
+  .facts svg { width: .95rem; height: .95rem; flex: none; }
+  .parts { list-style: none; margin: .55rem 0 0; padding: 0; display: grid; gap: .45rem; }
+  .part { font-size: .9375rem; line-height: 1.4; }
+  .part .desc { display: block; }
+  .part .who { display: block; color: var(--muted); font-size: .875rem; }
+  .parts.multi .part { padding-left: .75rem; border-left: 2px solid var(--line); }
+
+  .slot.hl .what {
+    background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+    border-radius: 12px; padding: .65rem .95rem .75rem; margin-top: -.45rem;
+  }
+  .slot.hl .title { margin-top: 0; }
 
   @media (max-width: 520px) {
     .slot { grid-template-columns: 4.6rem 1.4rem minmax(0, 1fr); }
@@ -118,7 +135,7 @@
 <header class="hero">
   <div class="hero-inner">
     <p class="kicker">Programa da visita</p>
-    <h1 translate="no">Sandeman</h1>
+    <h1 translate="no">Caves Ferreira</h1>
   </div>
   <svg class="meniscus" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
     <path fill="currentColor" d="M0 60 L0 34 Q720 -18 1440 34 L1440 60 Z"/>
@@ -133,34 +150,148 @@
 
 <script>
   /* ================= EDITAR AQUI =================
-     Hora de início e nome de cada momento, por ordem.
-     A duração mostrada é calculada até ao momento seguinte. */
+     hora: início. fim: só quando o horário é um intervalo.
+     partes: descrição, duração (min) e responsável; pode haver várias. */
   const PROGRAMA = [
-    { hora: "09:00", titulo: "Recepção" },
-    { hora: "09:15", titulo: "Apresentação Empresa" },
-    { hora: "10:00", titulo: "Visita Caves Sandeman" },
-    { hora: "11:00", titulo: "Prova Vinhos do Porto" },
-    { hora: "11:45", titulo: "Dinâmica de Grupo" },
-    { hora: "12:30", titulo: "Foto de Grupo e Encerramento" }
+    {
+      "hora": "09:10",
+      "titulo": "Sessão de Boas-Vindas",
+      "local": "Sala Principal",
+      "partes": [
+        {
+          "descricao": "Sessão de Boas-Vindas e apresentação do programa",
+          "duracao": 5,
+          "responsavel": "Mariana Leite"
+        }
+      ]
+    },
+    {
+      "hora": "09:15",
+      "titulo": "Apresentação Sogrape",
+      "local": "Sala Principal",
+      "partes": [
+        {
+          "descricao": "Apresentação Institucional da Sogrape",
+          "duracao": 40,
+          "responsavel": "Sofia Rocha"
+        },
+        {
+          "descricao": "Portefólio de Vinho do Porto",
+          "duracao": 5,
+          "responsavel": "Inês Dias"
+        }
+      ]
+    },
+    {
+      "hora": "10:00",
+      "fim": "10:30",
+      "titulo": "Prova de Vinho do Porto",
+      "local": "Sala Arcadas",
+      "partes": [
+        {
+          "descricao": "Porto Ferreira Branco Classic + Sandeman Ruby Classic",
+          "duracao": 30,
+          "responsavel": "Mariana Alves"
+        }
+      ]
+    },
+    {
+      "hora": "10:30",
+      "fim": "10:45",
+      "titulo": "Coffee-Break",
+      "local": "Bar",
+      "partes": [
+        {
+          "duracao": 15
+        }
+      ]
+    },
+    {
+      "hora": "10:45",
+      "fim": "11:30",
+      "titulo": "Visita Caves Ferreira",
+      "local": "Caves Ferreira",
+      "partes": [
+        {
+          "descricao": "Walking Tour",
+          "duracao": 45,
+          "responsavel": "Grape Ideas"
+        }
+      ]
+    },
+    {
+      "hora": "11:45",
+      "titulo": "Dinâmica de Grupo",
+      "local": "Sala Principal",
+      "partes": [
+        {
+          "duracao": 60,
+          "responsavel": "Inês Dias"
+        }
+      ]
+    },
+    {
+      "hora": "12:45",
+      "titulo": "Sessão de Encerramento",
+      "local": "Sala Principal",
+      "partes": [
+        {
+          "descricao": "Mensagem final",
+          "duracao": 5
+        }
+      ]
+    }
   ];
   /* =============================================== */
 
   const toMin = h => { const [a, b] = h.split(":").map(Number); return a * 60 + b; };
   const pad = n => String(n).padStart(2, "0");
-  const fmt = h => { const m = toMin(h); return `${pad(Math.floor(m / 60))}h${pad(m % 60)}`; };
+  const fmtM = m => `${pad(Math.floor(m / 60))}h${pad(m % 60)}`;
+  const fmt = h => fmtM(toMin(h));
+  const total = l => l.partes.reduce((s, p) => s + (p.duracao || 0), 0);
+  const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+
+  const ICON_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+  const ICON_CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+
+  const ultimo = PROGRAMA.at(-1);
+  document.getElementById("sub").textContent =
+    `Das ${fmt(PROGRAMA[0].hora)} às ${fmtM(toMin(ultimo.hora) + total(ultimo))}, ${PROGRAMA.length} momentos.`;
 
   const list = document.getElementById("timeline");
-  document.getElementById("sub").textContent =
-    `A partir das ${fmt(PROGRAMA[0].hora)}, ${PROGRAMA.length} momentos.`;
-
   PROGRAMA.forEach((l, i) => {
-    const next = PROGRAMA[i + 1];
-    const dur = next ? toMin(next.hora) - toMin(l.hora) : null;
-    const li = document.createElement("li");
-    li.className = "slot";
+    const li = el("li", "slot" + (l.destaque ? " hl" : ""));
     li.style.setProperty("--i", i);
-    li.innerHTML = `<time datetime="${l.hora}">${fmt(l.hora)}</time><span class="dot" aria-hidden="true"></span><span class="what"><span class="title"></span>${dur ? `<span class="meta">${dur} min</span>` : ""}</span>`;
-    li.querySelector(".title").textContent = l.titulo;
+
+    const tcol = el("div");
+    const time = el("time", null, fmt(l.hora)); time.dateTime = l.hora;
+    tcol.append(time);
+    if (l.fim) tcol.append(el("span", "until", `até ${fmt(l.fim)}`));
+    li.append(tcol, el("span", "dot"));
+    li.lastChild.setAttribute("aria-hidden", "true");
+
+    const what = el("div", "what");
+    what.append(el("span", "title", l.titulo));
+
+    const facts = el("div", "facts");
+    if (l.local) { const f = el("span"); f.innerHTML = ICON_PIN; f.append(l.local); facts.append(f); }
+    const d = total(l);
+    if (d) { const f = el("span"); f.innerHTML = ICON_CLOCK; f.append(`${d}\u00a0min`); facts.append(f); }
+    what.append(facts);
+
+    const partes = l.partes.filter(p => p.descricao || p.responsavel);
+    if (partes.length) {
+      const multi = partes.length > 1;
+      const ul = el("ul", "parts" + (multi ? " multi" : ""));
+      partes.forEach(p => {
+        const pi = el("li", "part");
+        if (p.descricao) pi.append(el("span", "desc", multi && p.duracao ? `${p.descricao}, ${p.duracao}\u00a0min` : p.descricao));
+        if (p.responsavel) pi.append(el("span", "who", `Com ${p.responsavel}`));
+        ul.append(pi);
+      });
+      what.append(ul);
+    }
+    li.append(what);
     list.append(li);
   });
 </script>
