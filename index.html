@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-PT">
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -135,7 +135,7 @@
 
 <header class="hero">
   <div class="hero-inner">
-    <p class="kicker">Programa da visita</p>
+    <p class="kicker">Event programme</p>
     <h1 translate="no">WiShare&nbsp;- UCP &amp;&nbsp;Sogrape</h1>
   </div>
   <svg class="meniscus" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
@@ -144,7 +144,7 @@
 </header>
 
 <main class="agenda">
-  <h2>Agenda do dia</h2>
+  <h2>Today's agenda</h2>
   <p class="sub" id="sub"></p>
   <ol class="timeline" id="timeline"></ol>
 </main>
@@ -157,11 +157,11 @@
   const PROGRAMA = [
     {
       "hora": "09:10",
-      "titulo": "Sessão de Boas-Vindas",
-      "local": "Sala Principal",
+      "titulo": "Welcome Session",
+      "local": "Main Room",
       "partes": [
         {
-          "descricao": "Sessão de Boas-Vindas e apresentação do programa",
+          "descricao": "Welcome and programme overview",
           "duracao": 5,
           "responsavel": "Mariana Leite"
         }
@@ -169,16 +169,16 @@
     },
     {
       "hora": "09:15",
-      "titulo": "Apresentação Sogrape",
-      "local": "Sala Principal",
+      "titulo": "Sogrape Presentation",
+      "local": "Main Room",
       "responsavel": "Sofia Rocha",
       "partes": [
         {
-          "descricao": "Apresentação Institucional da Sogrape",
+          "descricao": "Sogrape Corporate Presentation",
           "duracao": 40
         },
         {
-          "descricao": "Portefólio de Vinho do Porto",
+          "descricao": "Port Wine Portfolio",
           "duracao": 5
         }
       ]
@@ -186,8 +186,8 @@
     {
       "hora": "10:00",
       "fim": "10:30",
-      "titulo": "Prova de Vinho do Porto",
-      "local": "Sala Arcadas",
+      "titulo": "Port Wine Tasting",
+      "local": "Arcadas Room",
       "partes": [
         {
           "descricao": "Porto Ferreira Branco Classic + Sandeman Ruby Classic",
@@ -199,7 +199,7 @@
     {
       "hora": "10:30",
       "fim": "10:45",
-      "titulo": "Coffee-Break",
+      "titulo": "Coffee Break",
       "local": "Bar",
       "partes": [
         {
@@ -210,7 +210,7 @@
     {
       "hora": "10:45",
       "fim": "11:30",
-      "titulo": "Visita Caves Ferreira",
+      "titulo": "Caves Ferreira Visit",
       "local": "Caves Ferreira",
       "partes": [
         {
@@ -222,8 +222,8 @@
     },
     {
       "hora": "11:45",
-      "titulo": "Dinâmica de Grupo",
-      "local": "Sala Principal",
+      "titulo": "Group Activity",
+      "local": "Main Room",
       "partes": [
         {
           "duracao": 60,
@@ -233,11 +233,11 @@
     },
     {
       "hora": "12:45",
-      "titulo": "Sessão de Encerramento",
-      "local": "Sala Principal",
+      "titulo": "Closing Session",
+      "local": "Main Room",
       "partes": [
         {
-          "descricao": "Mensagem final",
+          "descricao": "Closing remarks",
           "duracao": 5
         }
       ]
@@ -247,7 +247,7 @@
 
   const toMin = h => { const [a, b] = h.split(":").map(Number); return a * 60 + b; };
   const pad = n => String(n).padStart(2, "0");
-  const fmtM = m => `${pad(Math.floor(m / 60))}h${pad(m % 60)}`;
+  const fmtM = m => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
   const fmt = h => fmtM(toMin(h));
   const total = l => l.partes.reduce((s, p) => s + (p.duracao || 0), 0);
   const el = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
@@ -257,7 +257,7 @@
 
   const ultimo = PROGRAMA.at(-1);
   document.getElementById("sub").textContent =
-    `Das ${fmt(PROGRAMA[0].hora)} às ${fmtM(toMin(ultimo.hora) + total(ultimo))}, ${PROGRAMA.length} momentos.`;
+    `From ${fmt(PROGRAMA[0].hora)} to ${fmtM(toMin(ultimo.hora) + total(ultimo))}, ${PROGRAMA.length} sessions.`;
 
   const list = document.getElementById("timeline");
   PROGRAMA.forEach((l, i) => {
@@ -267,7 +267,7 @@
     const tcol = el("div");
     const time = el("time", null, fmt(l.hora)); time.dateTime = l.hora;
     tcol.append(time);
-    if (l.fim) tcol.append(el("span", "until", `até ${fmt(l.fim)}`));
+    if (l.fim) tcol.append(el("span", "until", `until ${fmt(l.fim)}`));
     li.append(tcol, el("span", "dot"));
     li.lastChild.setAttribute("aria-hidden", "true");
 
@@ -287,12 +287,12 @@
       partes.forEach(p => {
         const pi = el("li", "part");
         if (p.descricao) pi.append(el("span", "desc", multi && p.duracao ? `${p.descricao}, ${p.duracao}\u00a0min` : p.descricao));
-        if (p.responsavel) pi.append(el("span", "who", `Com ${p.responsavel}`));
+        if (p.responsavel) pi.append(el("span", "who", `With ${p.responsavel}`));
         ul.append(pi);
       });
       what.append(ul);
     }
-    if (l.responsavel) what.append(el("span", "who-all", `Com ${l.responsavel}`));
+    if (l.responsavel) what.append(el("span", "who-all", `With ${l.responsavel}`));
     li.append(what);
     list.append(li);
   });
