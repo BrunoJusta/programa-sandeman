@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Programa Caves Ferreira</title>
+<title>WiShare - UCP &amp; Sogrape</title>
 <meta name="theme-color" content="#F2C12E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,8 +64,8 @@
   .hero .kicker { margin: 0 0 .5rem; font-weight: 600; font-size: 1.0625rem; opacity: .9; }
   .hero h1 {
     margin: 0;
-    font-size: clamp(3.25rem, 13vw, 7.5rem);
-    font-weight: 900; letter-spacing: -0.045em; line-height: .92;
+    font-size: clamp(2.25rem, 8vw, 4.5rem);
+    font-weight: 900; letter-spacing: -0.035em; line-height: 1;
     text-wrap: balance; overflow-wrap: anywhere;
   }
 
@@ -105,6 +105,7 @@
   .part { font-size: .9375rem; line-height: 1.4; }
   .part .desc { display: block; }
   .part .who { display: block; color: var(--muted); font-size: .875rem; }
+  .who-all { display: block; color: var(--muted); font-size: .875rem; margin-top: .45rem; }
   .parts.multi .part { padding-left: .75rem; border-left: 2px solid var(--line); }
 
   .slot.hl .what {
@@ -135,7 +136,7 @@
 <header class="hero">
   <div class="hero-inner">
     <p class="kicker">Programa da visita</p>
-    <h1 translate="no">Caves Ferreira</h1>
+    <h1 translate="no">WiShare&nbsp;- UCP &amp;&nbsp;Sogrape</h1>
   </div>
   <svg class="meniscus" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
     <path fill="currentColor" d="M0 60 L0 34 Q720 -18 1440 34 L1440 60 Z"/>
@@ -151,7 +152,8 @@
 <script>
   /* ================= EDITAR AQUI =================
      hora: início. fim: só quando o horário é um intervalo.
-     partes: descrição, duração (min) e responsável; pode haver várias. */
+     partes: descrição, duração (min) e responsável; pode haver várias.
+     responsavel ao nível do momento: aparece uma vez, depois das partes. */
   const PROGRAMA = [
     {
       "hora": "09:10",
@@ -169,16 +171,15 @@
       "hora": "09:15",
       "titulo": "Apresentação Sogrape",
       "local": "Sala Principal",
+      "responsavel": "Sofia Rocha",
       "partes": [
         {
           "descricao": "Apresentação Institucional da Sogrape",
-          "duracao": 40,
-          "responsavel": "Sofia Rocha"
+          "duracao": 40
         },
         {
           "descricao": "Portefólio de Vinho do Porto",
-          "duracao": 5,
-          "responsavel": "Inês Dias"
+          "duracao": 5
         }
       ]
     },
@@ -226,7 +227,7 @@
       "partes": [
         {
           "duracao": 60,
-          "responsavel": "Inês Dias"
+          "responsavel": "Sofia Rocha"
         }
       ]
     },
@@ -291,6 +292,7 @@
       });
       what.append(ul);
     }
+    if (l.responsavel) what.append(el("span", "who-all", `Com ${l.responsavel}`));
     li.append(what);
     list.append(li);
   });
